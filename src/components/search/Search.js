@@ -3,6 +3,7 @@ import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import axios from 'axios';
+import ImageResults from '../image-results/ImageResult';
 
 export default class Search extends Component {
     state = {
@@ -13,7 +14,7 @@ export default class Search extends Component {
         images: []
     };
 
-    onTextChange = (e) => {
+    onTextChange = e => {
         this.setState({[e.target.name]: e.target.value}, () => {
             axios.get(`${this.state.apiUrl}/?key=${this.state.apiKey}&q=${this.state.searchText}&image_type=photo&per_page=${this.state.amount}&safesearch=true`)
                 .then(res => this.setState({'images': res.data.hits}))
@@ -21,9 +22,9 @@ export default class Search extends Component {
         })
     };
 
-    onAmountChange = (e) => {
-        //this.setState({[]})
-    }
+    onAmountChange = (e,index,value) => {
+        this.setState({'amount': value })
+    } 
 
     render() {
         console.log(this.state);
