@@ -9,11 +9,15 @@ import FlatButton from 'material-ui/FlatButton'
 class ImageResults extends Component {
     state = {
         open: false,
+        currentImg: ''
     };
 
-    handleOpen = () => {
+    handleOpen = img => {
         console.log('open');
-        this.setState({open: true});
+        this.setState({
+            open: true,
+            currentImg: img
+        });
     };
 
     handleClose = () => {
@@ -41,21 +45,14 @@ class ImageResults extends Component {
                                 <span> by <strong> { img.user } </strong> </span >
                             }
                             actionIcon={
-                                <IconButton onClick={this.handleOpen}> 
+                                <IconButton onClick={() => this.handleOpen(img.largeImageURL)}> 
                                     <ZoomIn color="white"/> 
                                 </IconButton>
                             }>
                             <img src={img.largeImageURL} alt={img.title}/>
                         </GridTile>
                     ))}
-                     <Dialog
-                        actions={actions}
-                        modal={false}
-                        open={this.state.open}
-                        onRequestClose={this.handleClose}
-                        >
-                        Discard draft?
-                    </Dialog>
+                     
                 </GridList>
             );
         } else {
@@ -64,7 +61,14 @@ class ImageResults extends Component {
         return (
             <div>
                 {imageListContent}
-               
+                <Dialog
+                        actions={actions}
+                        modal={false}
+                        open={this.state.open}
+                        onRequestClose={this.handleClose}
+                        >
+                        <img src={this.state.currentImg} alt='' style={{width: '100%'}}/>>
+                </Dialog>
             </div>
         )
     }
